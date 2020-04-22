@@ -27,15 +27,46 @@ const MOVIE_SALES =
 const VIDEO_GAME_SALES =
   " https://cdn.freecodecamp.org/testable-projects-fcc/data/tree_map/video-game-sales-data.json";
 
-d3.queue()
-  .defer(d3.json, KICKSTARTER)
-  .defer(d3.json, MOVIE_SALES)
-  .defer(d3.json, VIDEO_GAME_SALES)
-  .await((error, kickStarter, movieSales, videoGame) => {
-    if (error) throw error;
-    svgContainer
-      .append("text")
-      .text(JSON.stringify(movieSales))
-      .attr("x", 10)
-      .attr("y", 20);
+d3.json(KICKSTARTER, (error, kickStarter) => {
+  if (error) throw error;
+
+  var root = d3.hierarchy(kickStarter).sum((d) => d.value);
+
+  const treemap = d3.treemap().size([width, height]);
+
+  treemap(root);
+
+  svgContainer
+    .selectAll("rect")
+    .data(root.leaves())
+    .enter()
+    .append("rect")
+    .attr("x", (d) => d.x0)
+    .attr("y", (d) => d.y0)
+    .attr("width", (d) => d.x1 - d.x0)
+    .attr("height", (d) => d.y1 - d.y0)
+    .style("stroke", "black")
+    .style("fill", "green");
+
+  svgContainer
+    .selectAll("text")
+    .data(root.leaves())
+    .enter()
+    .append("text")
+    .attr("x", (d) => d.x0 + 5)
+    .attr("y", (d) => d.y0 + 20)
+    .text((d) => d.data.name)
+    .style("font-size", 5)
+    .style("fill", "white");
+
+  const catagories = kickStarter.children.map((x) => {
+    const valueArray = x.children.map((y) => y.value);
+    let value = 0;
+    for (i = 0; i < valueArray.length; i++) {
+      value += parseInt(valueArray[i]);
+    }
+    return [x.name, value];
   });
+  console.log(catagories);
+  console.log("NarrFilm: " + (1911827 + 3105473 + 5702153));
+});
