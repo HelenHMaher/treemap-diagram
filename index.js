@@ -1,3 +1,27 @@
+//define colors
+
+const colors = [
+  "a",
+  "b",
+  "c",
+  "d",
+  "e",
+  "f",
+  "g",
+  "h",
+  "i",
+  "j",
+  "k",
+  "l",
+  "m",
+  "n",
+  "o",
+  "p",
+  "q",
+  "r",
+  "s",
+];
+
 //define svg area
 
 const width = 500,
@@ -30,11 +54,19 @@ const VIDEO_GAME_SALES =
 d3.json(KICKSTARTER, (error, kickStarter) => {
   if (error) throw error;
 
+  //establish treemap
+
   var root = d3.hierarchy(kickStarter).sum((d) => d.value);
-
   const treemap = d3.treemap().size([width, height]);
-
   treemap(root);
+
+  //link colors to categories
+
+  const chooseColor = {};
+  const categoryNames = root.children.map((d) => d.data.name);
+  categoryNames.forEach((key, i) => (chooseColor[key] = colors[i]));
+
+  //display treemap
 
   svgContainer
     .selectAll("rect")
@@ -46,7 +78,11 @@ d3.json(KICKSTARTER, (error, kickStarter) => {
     .attr("width", (d) => d.x1 - d.x0)
     .attr("height", (d) => d.y1 - d.y0)
     .style("stroke", "black")
-    .style("fill", "green");
+    .style("fill", (d) => {
+      return "var(--" + chooseColor[d.data.category] + ")";
+    });
+
+  //display labels
 
   svgContainer
     .selectAll("text")
@@ -58,6 +94,8 @@ d3.json(KICKSTARTER, (error, kickStarter) => {
     .text((d) => d.data.name)
     .style("font-size", 5)
     .style("fill", "white");
+
+  //check values
 
   const catagories = kickStarter.children.map((x) => {
     const valueArray = x.children.map((y) => y.value);

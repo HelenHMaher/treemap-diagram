@@ -1,5 +1,27 @@
 @import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;700&display=swap");
 
+:root {
+  --a: #3a0e37;
+  --b: #222a4f;
+  --c: #424067;
+  --d: #644f78;
+  --e: #be9fd1;
+  --f: #934b7a;
+  --g: #b84b72;
+  --h: #e56a6f;
+  --i: #d16b67;
+  --j: #e28a74;
+  --k: #ef9c6b;
+  --l: #f9a664;
+  --m: #fdba5c;
+  --n: #fedb63;
+  --o: #ffe57d;
+  --p: #f2eb9b;
+  --q: #ff8a01;
+  --r: #ff4c02;
+  --s: #ff5558;
+}
+
 html {
   font-family: "Source Sans Pro", sans-serif;
 }
