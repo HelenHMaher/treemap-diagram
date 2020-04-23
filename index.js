@@ -25,14 +25,16 @@ const colors = [
 //define svg area
 
 const width = 800,
-  height = 600;
+  height = 600,
+  paddingBottom = 100,
+  paddingRight = 100;
 
 const svgContainer = d3
   .select(".visHolder")
   .append("svg")
   .attr("id", "svg")
-  .attr("width", width)
-  .attr("height", height);
+  .attr("width", width + paddingRight)
+  .attr("height", height + paddingBottom);
 
 //define tooltip
 
@@ -107,26 +109,42 @@ d3.json(KICKSTARTER, (error, kickStarter) => {
             d.data.category +
             "<br>" +
             d3.format("$,")(d.data.value)
-        )
-        .on("mouseout", () => {
-          tooltip.style("opacity", 0);
-        });
+        );
+    })
+    .on("mouseout", () => {
+      tooltip.style("opacity", 0);
     });
 
-  //display labels
-
   cell
-    .selectAll("text")
-    .data((d) => d.data.name.split(/(?=[A-Z][^A-Z])/g))
-    .enter()
     .append("text")
+    .selectAll("tspan")
+    .data((d) => d.data.name)
+    .enter()
+    .append("tspan")
     .attr("class", "label")
     .attr("x", 5)
-    .attr("y", (d, i) => i * 12 + 10)
+    .attr("y", 10)
     .text((d) => d)
     .style("fill", "white")
-    .style("font-size", 12)
+    .style("font-size", 8)
     .style("text-shadow", "-1px 1px 0, 1px 1px 0, 1px -1px 0, -1px -1px 0");
+
+  //legend
+
+  const legend = svgContainer
+    .append("g")
+    .attr("id", "legend")
+    .style("transform", "translate(20px, " + (height - 50) + "px)");
+
+  legend
+    .selectAll("rect")
+    .data(colors)
+    .enter()
+    .append("rect")
+    .attr("x", (d, i) => i * 20)
+    .attr("width", 20)
+    .attr("height", 20)
+    .attr("fill", (d) => "var(--" + d + ")");
 
   //check values
 

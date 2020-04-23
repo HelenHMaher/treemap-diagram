@@ -13,12 +13,12 @@
   --j: #e28a74;
   --k: #ef9c6b;
   --l: #f2eb9b;
-  --m: #ff7033;
-  --n: #f9a664;
+  --m: #ffe57d;
+  --n: #fedb63;
   --o: #fdba5c;
-  --p: #fedb63;
+  --p: #f9a664;
   --q: #ff8a01;
-  --r: #ffe57d;
+  --r: #ff7033;
   --s: #ff5558;
 }
 
@@ -28,6 +28,7 @@ html {
 
 .visHolder {
   position: relative;
+  background: orange;
 }
 
 #tooltip {
