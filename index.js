@@ -92,6 +92,25 @@ d3.json(KICKSTARTER, (error, kickStarter) => {
     .style("stroke", "black")
     .style("fill", (d) => {
       return "var(--" + chooseColor[d.data.category] + ")";
+    })
+    .on("mouseover", (d) => {
+      tooltip
+        .style("opacity", 0.9)
+        .attr("data-value", d.data.value)
+        .style("top", d3.event.pageY - 200 + "px")
+        .style("left", d3.event.pageX + 50 + "px")
+        .html(
+          "<strong>" +
+            d.data.name +
+            "</strong>" +
+            "<br>" +
+            d.data.category +
+            "<br>" +
+            d3.format("$,")(d.data.value)
+        )
+        .on("mouseout", () => {
+          tooltip.style("opacity", 0);
+        });
     });
 
   //display labels
