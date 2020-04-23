@@ -24,8 +24,8 @@ const colors = [
 
 //define svg area
 
-const width = 500,
-  height = 500;
+const width = 800,
+  height = 600;
 
 const svgContainer = d3
   .select(".visHolder")
@@ -42,7 +42,7 @@ const tooltip = d3
   .attr("class", "tooltip")
   .attr("id", "tooltip");
 
-//importat data
+//import data
 
 const KICKSTARTER =
   " https://cdn.freecodecamp.org/testable-projects-fcc/data/tree_map/kickstarter-funding-data.json";
@@ -56,10 +56,13 @@ d3.json(KICKSTARTER, (error, kickStarter) => {
 
   //establish treemap
 
-  var root = d3.hierarchy(kickStarter).sum((d) => d.value);
-  const treemap = d3.treemap().size([width, height]);
-  treemap(root);
+  const root = d3
+    .hierarchy(kickStarter)
+    .sum((d) => d.value)
+    .sort((a, b) => b.value - a.value);
 
+  const treemap = d3.treemap().size([width, height]).padding(2);
+  treemap(root);
   //link colors to categories
 
   const chooseColor = {};
@@ -68,15 +71,19 @@ d3.json(KICKSTARTER, (error, kickStarter) => {
 
   //display treemap
 
-  svgContainer
-    .selectAll("rect")
+  const cell = svgContainer
+    .selectAll("g")
     .data(root.leaves())
     .enter()
+    .append("g")
+    .attr("class", "cell");
+
+  const tile = cell
     .append("rect")
     .attr("class", "tile")
-    .attr("data-name", "d.data.name")
-    .attr("data-category", "d.data.category")
-    .attr("data-value", "d.data.value")
+    .attr("data-name", (d) => d.data.name)
+    .attr("data-category", (d) => d.data.category)
+    .attr("data-value", (d) => d.data.value)
     .attr("x", (d) => d.x0)
     .attr("y", (d) => d.y0)
     .attr("width", (d) => d.x1 - d.x0)
@@ -96,8 +103,9 @@ d3.json(KICKSTARTER, (error, kickStarter) => {
     .attr("x", (d) => d.x0 + 5)
     .attr("y", (d) => d.y0 + 20)
     .text((d) => d.data.name)
-    .style("font-size", 5)
-    .style("fill", "white");
+    .style("fill", "white")
+    .style("font-size", 12)
+    .style("text-shadow", "-1px 1px 0, 1px 1px 0, 1px -1px 0, -1px -1px 0");
 
   //check values
 

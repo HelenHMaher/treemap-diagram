@@ -12,20 +12,16 @@
   --i: #d16b67;
   --j: #e28a74;
   --k: #ef9c6b;
-  --l: #f9a664;
-  --m: #fdba5c;
-  --n: #fedb63;
-  --o: #ffe57d;
-  --p: #f2eb9b;
+  --l: #f2eb9b;
+  --m: #ff7033;
+  --n: #f9a664;
+  --o: #fdba5c;
+  --p: #fedb63;
   --q: #ff8a01;
-  --r: #ff4c02;
+  --r: #ffe57d;
   --s: #ff5558;
 }
 
 html {
   font-family: "Source Sans Pro", sans-serif;
-}
-
-#svg {
-  background: purple;
 }
