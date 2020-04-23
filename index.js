@@ -26,8 +26,8 @@ const colors = [
 
 const width = 800,
   height = 600,
-  paddingBottom = 100,
-  paddingRight = 100;
+  paddingBottom = 20,
+  paddingRight = 250;
 
 const svgContainer = d3
   .select(".visHolder")
@@ -118,12 +118,12 @@ d3.json(KICKSTARTER, (error, kickStarter) => {
   cell
     .append("text")
     .selectAll("tspan")
-    .data((d) => d.data.name)
+    .data((d) => d.data.name.split(/(?=[A-Z][^A-Z])/g))
     .enter()
     .append("tspan")
     .attr("class", "label")
     .attr("x", 5)
-    .attr("y", 10)
+    .attr("y", (d, i) => 10 + i * 8)
     .text((d) => d)
     .style("fill", "white")
     .style("font-size", 8)
@@ -134,17 +134,30 @@ d3.json(KICKSTARTER, (error, kickStarter) => {
   const legend = svgContainer
     .append("g")
     .attr("id", "legend")
-    .style("transform", "translate(20px, " + (height - 50) + "px)");
+    .style("transform", "translate(" + (width + 80) + "px , 20px)");
 
   legend
     .selectAll("rect")
     .data(colors)
     .enter()
     .append("rect")
-    .attr("x", (d, i) => i * 20)
+    .attr("class", "legend-item")
+    .attr("x", 0)
+    .attr("y", (d, i) => i * 30)
     .attr("width", 20)
     .attr("height", 20)
-    .attr("fill", (d) => "var(--" + d + ")");
+    .attr("fill", (d) => "var(--" + d + ")")
+    .style("stroke", "black");
+
+  legend
+    .selectAll("text")
+    .data(categoryNames)
+    .enter()
+    .append("text")
+    .attr("x", 30)
+    .attr("y", (d, i) => i * 30)
+    .attr("dy", "1em")
+    .text((d) => d);
 
   //check values
 
