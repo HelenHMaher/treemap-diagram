@@ -76,7 +76,10 @@ d3.json(KICKSTARTER, (error, kickStarter) => {
     .data(root.leaves())
     .enter()
     .append("g")
-    .attr("class", "cell");
+    .attr("class", "cell")
+    .attr("transform", (d) => {
+      return "translate(" + d.x0 + "," + d.y0 + ")";
+    });
 
   const tile = cell
     .append("rect")
@@ -84,8 +87,6 @@ d3.json(KICKSTARTER, (error, kickStarter) => {
     .attr("data-name", (d) => d.data.name)
     .attr("data-category", (d) => d.data.category)
     .attr("data-value", (d) => d.data.value)
-    .attr("x", (d) => d.x0)
-    .attr("y", (d) => d.y0)
     .attr("width", (d) => d.x1 - d.x0)
     .attr("height", (d) => d.y1 - d.y0)
     .style("stroke", "black")
@@ -95,15 +96,15 @@ d3.json(KICKSTARTER, (error, kickStarter) => {
 
   //display labels
 
-  svgContainer
+  cell
     .selectAll("text")
-    .data(root.leaves())
+    .data((d) => d.data.name.split(/(?=[A-Z][^A-Z])/g))
     .enter()
     .append("text")
     .attr("class", "label")
-    .attr("x", (d) => d.x0 + 5)
-    .attr("y", (d, i) => d.y0 + 10)
-    .text((d) => d.data.name)
+    .attr("x", 5)
+    .attr("y", (d, i) => i * 12 + 10)
+    .text((d) => d)
     .style("fill", "white")
     .style("font-size", 12)
     .style("text-shadow", "-1px 1px 0, 1px 1px 0, 1px -1px 0, -1px -1px 0");
