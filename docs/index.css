@@ -1,0 +1,72 @@
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;700&display=swap");
+
+:root {
+  --a: #3a0e37;
+  --b: #222a4f;
+  --c: #424067;
+  --d: #644f78;
+  --e: #be9fd1;
+  --f: #934b7a;
+  --g: #b84b72;
+  --h: #e56a6f;
+  --i: #d16b67;
+  --j: #e28a74;
+  --k: #ef9c6b;
+  --l: #f2eb9b;
+  --m: #ffe57d;
+  --n: #fedb63;
+  --o: #fdba5c;
+  --p: #f9a664;
+  --q: #ff8a01;
+  --r: #ff7033;
+  --s: #ff5558;
+}
+
+html {
+  font-family: "Source Sans Pro", sans-serif;
+}
+
+.visHolder {
+  position: relative;
+  background: lightgrey;
+  box-shadow: 0 0 5px;
+  display: flex;
+}
+
+#tooltip {
+  background: white;
+  text-align: center;
+  padding: 10px;
+  box-shadow: 0 0 10px;
+  opacity: 0;
+  position: absolute;
+}
+
+.tile:hover {
+  opacity: 0.7;
+  cursor: cell;
+}
+
+.footer {
+  position: absolute;
+  bottom: 5px;
+  right: 40px;
+  font-size: 12px;
+}
+
+.heading {
+  display: inline-block;
+}
+
+.headingElem {
+  display: inline-block;
+  padding-left: 20px;
+}
+
+#title {
+  font-size: 40px;
+}
+
+#description {
+  font-size: 20px;
+}
